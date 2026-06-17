@@ -45,7 +45,7 @@ env:
   ANDROID_SIGNING_KEY: "${{ secrets.ANDROID_SIGNING_KEY }}"
   MACOS_P12_BASE64: "${{ secrets.MACOS_P12_BASE64 }}"
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
-  SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
+  SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}"
   # 添加你的自定义环境变量
   RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}
   RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}
@@ -1043,7 +1043,6 @@ jobs:
         job:
           - {
               arch: x86_64,
-              target: x86_64-unknown-linux-gnu,
               distro: ubuntu18.04,
               on: ubuntu-22.04,
               deb_arch: amd64,
@@ -1051,7 +1050,6 @@ jobs:
             }
           - {
               arch: aarch64,
-              target: aarch64-unknown-linux-gnu,
               distro: ubuntu18.04,
               on: ubuntu-22.04-arm,
               deb_arch: arm64,

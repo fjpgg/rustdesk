@@ -1054,10 +1054,10 @@ pub fn get_api_server(api: String, custom: String) -> String {
         res.pop();
     }
     if res.starts_with("https")
-        && res.ends_with(":21114")
+        && res.ends_with(":53614")
         && get_builtin_option(keys::OPTION_ALLOW_HTTPS_21114) != "Y"
     {
-        return res.replace(":21114", "");
+        return res.replace(":56314", "");
     }
     res
 }
@@ -1081,13 +1081,16 @@ fn get_api_server_(api: String, custom: String) -> String {
             return format!("http://{}", s);
         }
     }
-    "https://admin.rustdesk.com".to_owned()
+    env!("API_SERVER").to_owned()
 }
 
 #[inline]
 pub fn is_public(url: &str) -> bool {
-    let url = url.to_ascii_lowercase();
-    url.contains("rustdesk.com/") || url.ends_with("rustdesk.com")
+    // 从环境变量读取公共域名列表，用逗号分隔，如果没有则编译失败
+    let servers = env!("PUBLIC_SERVERS");
+    servers.split(',').any(|server| {
+        url.contains(&format!("{}/", server)) || url.ends_with(server)
+    })
 }
 
 pub fn get_udp_punch_enabled() -> bool {
